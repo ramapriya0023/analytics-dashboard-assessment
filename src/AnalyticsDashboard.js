@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import DashboardContainer from "./components/Dashboard/DashboardContainer";
 
 const Container = styled("div")({
-  padding: "20px",
+  padding: "30px",
 });
 
 const AnalyticsDashboard = () => {

@@ -1,10 +1,12 @@
 const express = require("express");
 const evDataRoutes = require("./routes/evData");
 
+const cors = require("cors");
 const app = express();
-const PORT = 6000;
+const PORT = 8000;
 
-// Use EV data routes
+app.use(cors());
+
 app.use("/api", evDataRoutes);
 
 app.listen(PORT, () => {
