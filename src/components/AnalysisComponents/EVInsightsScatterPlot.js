@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
+import { ScatterChart } from "@mui/x-charts/ScatterChart"; // Import the ScatterChart
 import { styled } from "@mui/material/styles";
 import {
   Card,
@@ -29,15 +29,10 @@ const ChartContent = styled("div")({
   alignItems: "center",
 });
 
-const CAFVEligibilityChart = ({ id, title }) => {
-  const [series, setSeries] = useState([]);
-  const [xAxisLabels, setXAxisLabels] = useState([]);
-  const contentRef = useRef(null);
-  const highlightScope = {
-    highlight: "series",
-    fade: "global",
-  };
+const EVInsightsScatterPlot = ({ id, title }) => {
+  const [chartData, setChartData] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
 
   const handleExpandClick = () => {
     setExpanded((prev) => {
@@ -54,45 +49,35 @@ const CAFVEligibilityChart = ({ id, title }) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/api/cafv-eligibility"
-        ); // Adjust the URL as necessary
-        const data = await response.json();
-
-        setSeries(data.response.map((s) => ({ ...s, highlightScope })));
-        setXAxisLabels(data.xAxisLabels);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    fetch("http://localhost:8000/api/ev-msrp-insights")
+      .then((response) => response.json())
+      .then((data) => {
+        setChartData(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (
     <Container elevation={2} ref={contentRef}>
       <ChartContent>
-        <BarChart
-          width={620}
-          height={350}
-          series={series}
-          skipAnimation={false} // You can control the animation here
-          xAxis={[
-            {
-              label: "City",
-              data: xAxisLabels,
-              scaleType: "band",
-              labelStyle: {
-                fontSize: "15px",
+        {chartData.length > 0 ? (
+          <ScatterChart
+            series={chartData}
+            width={620}
+            height={350}
+            xAxis={[
+              {
+                label: "City",
+                labelStyle: {
+                  fontSize: "15px",
+                },
               },
-              tickLabelStyle: {
-                fontSize: "15px",
-              },
-            },
-          ]}
-        />
+            ]}
+            grid={{ vertical: true, horizontal: true }}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
       </ChartContent>
       <CardActions
         disableSpacing
@@ -115,12 +100,11 @@ const CAFVEligibilityChart = ({ id, title }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            This bar chart provides a breakdown of Clean Alternative Fuel
-            Vehicle (CAEV) incentive eligibility across different cities.
-            Seattle has the highest number of eligible vehicles, followed by
-            Vancouver and Bellevue. This indicates strong local policies and
-            incentives in certain areas that are driving EV adoption, with some
-            cities showing higher support than others.
+            Electric vehicles are available in a wide price range, from
+            affordable options to luxury models. There's a significant
+            difference in the range offered by different EV models. Brands like
+            Kia and MINI offer more affordable, shorter-range EVs, while Tesla
+            and Porsche focus on high-performance, long-range models.
           </Typography>
         </CardContent>
       </Collapse>
@@ -128,4 +112,4 @@ const CAFVEligibilityChart = ({ id, title }) => {
   );
 };
 
-export default CAFVEligibilityChart;
+export default EVInsightsScatterPlot;

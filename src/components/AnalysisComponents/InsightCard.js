@@ -4,13 +4,14 @@ import { Card, CardContent, Typography, Box } from "@mui/material";
 const InsightCard = ({ title, number, description }) => {
   return (
     <Card
+      elevation={2}
       sx={{
-        maxWidth: 200,
-        maxHeight: 200,
-        padding: 2,
-        margin: 2,
+        maxWidth: 250,
+        maxHeight: 220,
+        margin: "10px",
         borderRadius: 3,
-        boxShadow: 3,
+        boxShadow:
+          "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
       }}
     >
       <CardContent>

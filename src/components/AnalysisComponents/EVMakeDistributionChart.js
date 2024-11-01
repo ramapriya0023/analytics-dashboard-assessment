@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { styled } from "@mui/material/styles";
 import {
@@ -16,14 +16,15 @@ const Container = styled(Card)({
   display: "flex",
   flexDirection: "column",
   borderRadius: "15px",
-  maxWidth: "45%",
-  width: "45%",
+  maxWidth: "47%",
+  width: "47%",
   //width: "940px",
   height: "100%",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
 
 const ChartContent = styled("div")({
-  padding: "10px",
+  padding: "0px 10px 0px 10px",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
@@ -33,9 +34,20 @@ const EVMakeDistributionChart = ({ id, title }) => {
   const [xLabels, setXLabels] = useState([]);
   const [evCounts, setEvCounts] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setExpanded((prev) => {
+      if (!prev) {
+        setTimeout(() => {
+          contentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+      return !prev;
+    });
   };
 
   useEffect(() => {
@@ -64,24 +76,19 @@ const EVMakeDistributionChart = ({ id, title }) => {
   }, []);
 
   return (
-    <Container elevation={4}>
+    <Container elevation={2} ref={contentRef}>
       <ChartContent>
         <BarChart
-          width={600}
-          height={400}
+          width={620}
+          height={350}
           series={[{ data: evCounts, label: "EV Count", id: "evCountId" }]}
-          yAxis={[
-            {
-              label: "Count",
-            },
-          ]}
           xAxis={[
             {
               label: "Model",
               data: xLabels,
               scaleType: "band",
               tickLabelStyle: {
-                fontSize: "10px",
+                fontSize: "11px",
               },
             },
           ]}
@@ -93,6 +100,7 @@ const EVMakeDistributionChart = ({ id, title }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          padding: "0px",
         }}
       >
         <Typography variant="h6">{title}</Typography>
@@ -106,9 +114,12 @@ const EVMakeDistributionChart = ({ id, title }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant="h6" sx={{ color: "text.secondary" }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            This bar chart shows production volumes by model, with Tesla leading
+            by a wide margin at over 25,000 units. Other manufacturers,
+            including Nissan, Chevrolet, BMW, and Ford, contribute smaller
+            shares. Tesla’s dominant production reflects its focus on scaling EV
+            manufacturing to meet growing demand.
           </Typography>
         </CardContent>
       </Collapse>

@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { Gauge } from "@mui/x-charts/Gauge";
+import {
+  GaugeContainer,
+  GaugeValueArc,
+  GaugeReferenceArc,
+  useGaugeState,
+} from "@mui/x-charts/Gauge";
 import {
   Card,
   CardContent,
@@ -12,29 +18,64 @@ import {
 } from "@mui/material";
 
 const Container = styled(Card)({
-  padding: "10px",
   display: "flex",
   flexDirection: "column",
   borderRadius: "15px",
-  maxWidth: "60%",
-  width: "60%",
+  maxWidth: "63%",
+  width: "63%",
   //width: "940px",
   height: "100%",
+  padding: "10px",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
 
 const ChartContent = styled("div")({
-  padding: "10px",
+  padding: "0px 10px 0px 10px",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
 });
 
+function GaugePointer() {
+  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
+
+  if (valueAngle === null) {
+    return null;
+  }
+
+  const target = {
+    x: cx + outerRadius * Math.sin(valueAngle),
+    y: cy - outerRadius * Math.cos(valueAngle),
+  };
+  return (
+    <g>
+      <circle cx={cx} cy={cy} r={5} fill="red" />
+      <path
+        d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
+        stroke="red"
+        strokeWidth={3}
+      />
+    </g>
+  );
+}
+
 const TopMileageGauges = ({ id, title }) => {
   const [topMileageModels, setTopMileageModels] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
+  const contentRef = useRef(null);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setExpanded((prev) => {
+      if (!prev) {
+        setTimeout(() => {
+          contentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+      return !prev;
+    });
   };
 
   useEffect(() => {
@@ -55,7 +96,7 @@ const TopMileageGauges = ({ id, title }) => {
   }, []);
 
   return (
-    <Container elevation={4}>
+    <Container elevation={2} ref={contentRef}>
       <ChartContent>
         <Stack
           direction={{ xs: "column", md: "row" }}
@@ -63,14 +104,35 @@ const TopMileageGauges = ({ id, title }) => {
         >
           {topMileageModels.map((model, index) => (
             <div key={index} style={{ textAlign: "center" }}>
-              <Gauge
-                width={150}
-                height={150}
+              <Typography
+                variant="body2"
+                sx={{ position: "relative", top: "30px" }}
+              >{`${model.mileage} miles`}</Typography>
+              <GaugeContainer
+                width={140}
+                height={160}
+                startAngle={-110}
+                endAngle={110}
+                value={model.mileage}
+                valueMax={500}
+              >
+                <GaugeReferenceArc />
+                <GaugeValueArc />
+                <GaugePointer />
+              </GaugeContainer>
+              {/* <Gauge
+                width={140}
+                height={160}
                 value={model.mileage}
                 valueMax={500}
                 text={`${model.mileage} \r miles`}
-              />
-              <p>{model.make}</p>
+              /> */}
+              <Typography
+                variant="body1"
+                sx={{ position: "relative", bottom: "20px" }}
+              >
+                {model.make}
+              </Typography>
             </div>
           ))}
         </Stack>
@@ -82,6 +144,7 @@ const TopMileageGauges = ({ id, title }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          padding: "0px",
         }}
       >
         <Typography variant="h6">{title}</Typography>
@@ -95,9 +158,12 @@ const TopMileageGauges = ({ id, title }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant="h6" sx={{ color: "text.secondary" }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            This chart compares the driving range of various EV models, showing
+            Tesla at the top with a range of 337 miles. Chevrolet, Hyundai, Kia,
+            and Jaguar follow, with ranges between 234 and 259 miles. This
+            highlights Tesla's leadership in battery range technology, offering
+            a significant advantage for long-distance driving.
           </Typography>
         </CardContent>
       </Collapse>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { styled } from "@mui/material/styles";
 import {
@@ -16,13 +16,14 @@ const Container = styled(Card)({
   display: "flex",
   flexDirection: "column",
   borderRadius: "15px",
-  maxWidth: "45%",
-  width: "45%",
+  maxWidth: "47%",
+  width: "47%",
   height: "100%",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
 
 const ChartContent = styled("div")({
-  padding: "10px",
+  padding: "0px 10px 0px 10px",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
@@ -32,9 +33,20 @@ const SalesFrequencyLineChart = ({ id, title }) => {
   const [chartData, setChartData] = useState(null);
   const yearFormatter = (date) => date.toString();
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setExpanded((prev) => {
+      if (!prev) {
+        setTimeout(() => {
+          contentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+      return !prev;
+    });
   };
 
   useEffect(() => {
@@ -61,14 +73,6 @@ const SalesFrequencyLineChart = ({ id, title }) => {
 
         setChartData({
           series: seriesData,
-          yAxis: [
-            {
-              label: "Count",
-              labelStyle: {
-                fontSize: "15px",
-              },
-            },
-          ],
           xAxis: [
             {
               data: allYears,
@@ -86,13 +90,13 @@ const SalesFrequencyLineChart = ({ id, title }) => {
   }, []);
 
   return (
-    <Container elevation={4}>
+    <Container elevation={2} ref={contentRef}>
       <ChartContent>
         {chartData ? (
           <LineChart
             {...chartData}
-            width={600}
-            height={400}
+            width={620}
+            height={350}
             series={chartData.series}
           />
         ) : (
@@ -105,6 +109,7 @@ const SalesFrequencyLineChart = ({ id, title }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          padding: "0px",
         }}
       >
         <Typography variant="h6">{title}</Typography>
@@ -118,9 +123,12 @@ const SalesFrequencyLineChart = ({ id, title }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant="h6" sx={{ color: "text.secondary" }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            The line chart illustrates the trend in sales frequency over time,
+            with a notable increase around 2018, especially for Tesla. This
+            upward trend aligns with the broader growth in EV adoption, with
+            Tesla experiencing the most rapid growth, likely driven by expanding
+            product lines and enhanced consumer interest in EVs.
           </Typography>
         </CardContent>
       </Collapse>

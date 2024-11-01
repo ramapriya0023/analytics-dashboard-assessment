@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { styled } from "@mui/material/styles";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardMedia,
-  Paper,
   CardActions,
   Typography,
-  IconButton,
   Button,
   Collapse,
 } from "@mui/material";
@@ -27,13 +23,13 @@ const Legend = styled("div")({
 });
 
 const Container = styled(Card)({
-  padding: "10px",
   display: "flex",
   flexDirection: "column",
   borderRadius: "15px",
-  maxWidth: "30%",
-  width: "30%",
+  maxWidth: "33%",
+  width: "33%",
   height: "100%",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
 
 const ChartContent = styled("div")({
@@ -47,9 +43,20 @@ const ChartContent = styled("div")({
 const SimplePieChart = ({ id, title }) => {
   const [data, setData] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setExpanded((prev) => {
+      if (!prev) {
+        setTimeout(() => {
+          contentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+      return !prev;
+    });
   };
 
   useEffect(() => {
@@ -76,8 +83,9 @@ const SimplePieChart = ({ id, title }) => {
   const pieParams = {
     margin: { right: 5 },
   };
+
   return (
-    <Container elevation={4}>
+    <Container elevation={2} ref={contentRef}>
       <ChartContent>
         <PieChart
           colors={["skyblue", "pink"]}
@@ -119,7 +127,6 @@ const SimplePieChart = ({ id, title }) => {
               }}
             ></span>
             <div style={{ width: "170px" }}>
-              {" "}
               {`Battery Electric Vehicle (BEV)`}
             </div>
           </Legend>
@@ -145,6 +152,7 @@ const SimplePieChart = ({ id, title }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          padding: "5px",
         }}
       >
         <Typography variant="h6">{title}</Typography>
@@ -158,9 +166,13 @@ const SimplePieChart = ({ id, title }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant="h6" sx={{ color: "text.secondary" }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            The pie chart displays the distribution of EV types, with Battery
+            Electric Vehicles (BEVs) significantly outnumbering Plug-in Hybrid
+            Electric Vehicles (PHEVs) (39,461 vs. 10,539). This suggests a
+            strong consumer preference for fully electric vehicles over hybrids,
+            possibly due to advances in battery technology and the growing
+            availability of charging infrastructure.
           </Typography>
         </CardContent>
       </Collapse>

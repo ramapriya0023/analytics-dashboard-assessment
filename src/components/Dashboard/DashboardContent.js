@@ -6,11 +6,12 @@ import EVMakeDistributionChart from "../AnalysisComponents/EVMakeDistributionCha
 import SalesFrequencyLineChart from "../AnalysisComponents/SalesFrequencyLineChart";
 import CAFVEligibilityChart from "../AnalysisComponents/CAFVEligibilityChart";
 import HighlightsContainer from "../AnalysisComponents/HighlightsContainer";
+import EVInsightsScatterPlot from "../AnalysisComponents/EVInsightsScatterPlot";
 
 const DashboardContainer = styled("div")({
   display: "flex",
-  justifyContent: "space-around",
-  flexWrap: "wrap",
+  //justifyContent: "space-around",
+  //flexWrap: "wrap",
   gap: "30px",
   flexDirection: "column",
 });
@@ -48,10 +49,22 @@ const DashboardContent = () => {
           title="Sales Frequency by Year of Top Models"
         />
       </div>
-      <CAFVEligibilityChart
-        id="city-cafv-chart"
-        title="CAFV Eligibility by City"
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <CAFVEligibilityChart
+          id="city-cafv-chart"
+          title="CAFV Eligibility by City"
+        />
+        <EVInsightsScatterPlot
+          id="ev-insights-scatterplot"
+          title={"Price and Range Dynamics"}
+        />
+      </div>
     </DashboardContainer>
   );
 };

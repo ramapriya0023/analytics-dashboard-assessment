@@ -177,4 +177,53 @@ router.get("/cafv-eligibility", (req, res) => {
   res.json({ response, xAxisLabels });
 });
 
+router.get("/ev-msrp-insights", (req, res) => {
+  const manufacturers = ["TESLA", "PORSCHE", "KIA", "VOLVO", "MINI", "BMW"];
+
+  const insightsData = evData.reduce((acc, row) => {
+    const make = row["Make"];
+    const baseMSRP = parseFloat(row["Base MSRP"]);
+    const electricRange = parseFloat(row["Electric Range"]);
+
+    if (
+      manufacturers.includes(make) &&
+      !isNaN(baseMSRP) &&
+      !isNaN(electricRange) &&
+      make &&
+      baseMSRP > 0
+    ) {
+      if (!acc[make]) {
+        acc[make] = [];
+      }
+
+      const isUnique = !acc[make].some(
+        (entry) =>
+          entry.baseMSRP === baseMSRP && entry.electricRange === electricRange
+      );
+
+      if (isUnique && acc[make].length < 10) {
+        acc[make].push({
+          baseMSRP,
+          electricRange,
+        });
+      }
+    }
+
+    return acc;
+  }, {});
+
+  const formattedData = Object.entries(insightsData).map(([make, values]) => {
+    return {
+      label: make,
+      data: values.map(({ baseMSRP, electricRange }, index) => ({
+        id: `${make}-${index}`,
+        x: baseMSRP,
+        y: electricRange,
+      })),
+    };
+  });
+
+  res.json(formattedData);
+});
+
 module.exports = router;

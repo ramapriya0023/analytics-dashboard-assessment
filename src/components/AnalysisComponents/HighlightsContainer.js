@@ -7,27 +7,28 @@ const HighlightsContainer = () => {
     {
       title: "Total Electric Vehicles",
       number: "28,735",
-      description: "EVs currently on the road.",
+      description: "Driving the future—counting every EV on the road!",
     },
     {
       title: "Fastest Growing Make",
       number: "Tesla",
-      description: "With the highest registration growth.",
+      description: "Leading the charge in popularity and growth!",
     },
     {
-      title: "Top EV Model",
-      number: "Model Y",
-      description: "Most popular model by registration.",
+      title: "EV Average Mileage",
+      number: "300 miles",
+      description: "Go the distance—average range per charge!",
     },
     {
-      title: "Popular Fuel Type",
-      number: "98%",
-      description: "EVs are primarily battery electric.",
+      title: "YoY Growth in US",
+      number: "+ 57%",
+      description:
+        "Charging ahead—EV adoption surges with a year-over-year increase!",
     },
     {
       title: "Brand Diversity",
       number: "12",
-      description: "Unique brands contributing to the EV market share.",
+      description: "A vibrant mix of brands shaping the EV market!",
     },
   ];
 
