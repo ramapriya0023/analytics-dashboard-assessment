@@ -34,10 +34,10 @@
     "workbox-streams": "^6.6.0"
   },
     "scripts": {
-      "start": "react-scripts start",
-    "build": "react-scripts build",
+      "start": "node server/server.js",
       "client": "react-scripts start",
-      "dev": "concurrently \"npm run start\" \"npm run client\""
+      "dev": "concurrently \"npm run start\" \"npm run client\"",
+      "build": "react-scripts build && cp -r build server/"
     },
   
   "eslintConfig": {
