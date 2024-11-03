@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const Container = styled(Card)({
   padding: "10px",
@@ -55,7 +56,7 @@ const CAFVEligibilityChart = ({ title }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("api/cafv-eligibility");
+        const response = await fetch(`${apiUrl}/cafv-eligibility`);
         const data = await response.json();
         const colors = ["#55d491", "#13aed6", "#4FC3F7", "#FF8A65", "#BA68C8"];
         setSeries(

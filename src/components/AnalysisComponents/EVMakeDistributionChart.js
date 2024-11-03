@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const Container = styled(Card)({
   padding: "10px",
@@ -51,7 +52,7 @@ const EVMakeDistributionChart = ({ id, title }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/ev-makes");
+        const response = await fetch(`${apiUrl}/ev-makes`);
         const result = await response.json();
 
         const labels = result.map((item) =>

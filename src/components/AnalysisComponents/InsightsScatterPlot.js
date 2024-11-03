@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const Container = styled(Card)({
   padding: "10px",
@@ -48,7 +49,7 @@ const EVInsightsScatterPlot = ({ title }) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/ev-msrp-insights")
+    fetch(`${apiUrl}/ev-msrp-insights`)
       .then((response) => response.json())
       .then((data) => {
         setChartData(data);

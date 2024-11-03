@@ -15,6 +15,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const Container = styled(Card)({
   display: "flex",
@@ -79,9 +80,7 @@ const TopMileageGauges = ({ id, title }) => {
   useEffect(() => {
     const fetchTopMileageData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/top-mileage-models"
-        );
+        const response = await fetch(`${apiUrl}/top-mileage-models`);
         const data = await response.json();
 
         setTopMileageModels(data.slice(0, 5));

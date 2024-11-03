@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const LegendContainer = styled("div")({
   display: "flex",
@@ -62,7 +63,7 @@ const SimplePieChart = ({ title }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/ev-types");
+        const response = await fetch(`${apiUrl}/ev-types`);
         const result = await response.json();
 
         const formattedData = result.map((item, index) => ({

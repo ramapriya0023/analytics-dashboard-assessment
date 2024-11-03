@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
+import { apiUrl } from "../../utils/apiURL";
 
 const Container = styled(Card)({
   padding: "10px",
@@ -49,7 +50,7 @@ const SalesFrequencyLineChart = ({ id, title }) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/ev-sales-frequency")
+    fetch(`${apiUrl}/ev-sales-frequency`)
       .then((response) => response.json())
       .then((data) => {
         const allYears = Array.from(
