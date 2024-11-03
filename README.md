@@ -1,5 +1,14 @@
 # MapUp - Analytics Dashboard Assessment
 
+## Screenshots
+
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/8eafbf69-eb4e-46e1-a369-1a7cc31cf7a0">
+
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/46bc3517-9990-4d27-8aa2-1bc6308b250d">
+
+<img width="1469" alt="image" src="https://github.com/user-attachments/assets/54bf49c3-0376-491a-8c66-6f7f1912f87b">
+
+
 ## Overview
 
 The objective of this assessment is to analyze the provided Electric Vehicle (EV) population data and create a frontend dashboard that visualizes key insights about the dataset. This repository contains the necessary data and instructions for you to demonstrate your analytical and dashboard creation skills. Feel free to use any tech stack you want to create the dashboard.
