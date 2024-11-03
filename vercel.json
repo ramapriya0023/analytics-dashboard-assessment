@@ -6,25 +6,24 @@
         "use": "@vercel/node"
       },
       {
-        "src": "src/react/package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "build"
-        }
+        "src": "src/build/**",
+        "use": "@vercel/static"
       }
     ],
     "routes": [
       {
         "src": "/api/(.*)",
-        "dest": "/server/server.js"
+        "dest": "server/server.js"
       },
       {
         "src": "/(.*)",
-        "dest": "/src/react/$1"
+        "dest": "/src/build/$1"
       }
-    ]
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
   }
-  
   
   
   
