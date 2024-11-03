@@ -40,7 +40,7 @@ const ChartContent = styled("div")({
   height: "100%",
 });
 
-const SimplePieChart = ({ id, title }) => {
+const SimplePieChart = ({ title }) => {
   const [data, setData] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef(null);
@@ -121,12 +121,12 @@ const SimplePieChart = ({ id, title }) => {
             <span
               style={{
                 border: "1px solid skyblue",
-                width: "20px",
-                height: "20px",
+                width: "15px",
+                height: "15px",
                 backgroundColor: "skyblue",
               }}
             ></span>
-            <div style={{ width: "170px" }}>
+            <div style={{ width: "170px", fontSize: "13px" }}>
               {`Battery Electric Vehicle (BEV)`}
             </div>
           </Legend>
@@ -134,13 +134,13 @@ const SimplePieChart = ({ id, title }) => {
             <span
               style={{
                 border: "1px solid pink",
-                width: "20px",
-                height: "20px",
+                width: "15px",
+                height: "15px",
                 backgroundColor: "pink",
               }}
             ></span>
             <div
-              style={{ width: "170px" }}
+              style={{ width: "170px", fontSize: "13px" }}
             >{`Plug-in Hybrid Electric Vehicle (PHEV)`}</div>
           </Legend>
         </LegendContainer>

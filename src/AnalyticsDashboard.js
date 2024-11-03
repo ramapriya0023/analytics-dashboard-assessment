@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import DashboardContainer from "./components/Dashboard/DashboardContainer";
 
@@ -7,17 +7,6 @@ const Container = styled("div")({
 });
 
 const AnalyticsDashboard = () => {
-  const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
-  // if (loading) {
-  //   return (
-  //     <Container>
-  //       <CircularProgress />
-  //     </Container>
-  //   );
-  // }
-
   return (
     <Container>
       <DashboardContainer />

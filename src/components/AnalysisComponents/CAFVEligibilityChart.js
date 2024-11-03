@@ -17,7 +17,6 @@ const Container = styled(Card)({
   borderRadius: "15px",
   maxWidth: "47%",
   width: "47%",
-  //width: "940px",
   height: "100%",
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
@@ -29,7 +28,7 @@ const ChartContent = styled("div")({
   alignItems: "center",
 });
 
-const CAFVEligibilityChart = ({ id, title }) => {
+const CAFVEligibilityChart = ({ title }) => {
   const [series, setSeries] = useState([]);
   const [xAxisLabels, setXAxisLabels] = useState([]);
   const contentRef = useRef(null);
@@ -58,10 +57,16 @@ const CAFVEligibilityChart = ({ id, title }) => {
       try {
         const response = await fetch(
           "http://localhost:8000/api/cafv-eligibility"
-        ); // Adjust the URL as necessary
+        );
         const data = await response.json();
-
-        setSeries(data.response.map((s) => ({ ...s, highlightScope })));
+        const colors = ["#55d491", "#13aed6", "#4FC3F7", "#FF8A65", "#BA68C8"];
+        setSeries(
+          data.response.map((s, index) => ({
+            ...s,
+            highlightScope,
+            color: colors[index % colors.length],
+          }))
+        );
         setXAxisLabels(data.xAxisLabels);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -78,7 +83,7 @@ const CAFVEligibilityChart = ({ id, title }) => {
           width={620}
           height={350}
           series={series}
-          skipAnimation={false} // You can control the animation here
+          skipAnimation={false}
           xAxis={[
             {
               label: "City",

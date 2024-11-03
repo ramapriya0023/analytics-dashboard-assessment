@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import {
   Card,
   CardContent,
-  CardHeader,
   Typography,
   CardActions,
   Button,
@@ -18,7 +17,6 @@ const Container = styled(Card)({
   borderRadius: "15px",
   maxWidth: "47%",
   width: "47%",
-  //width: "940px",
   height: "100%",
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
@@ -81,7 +79,14 @@ const EVMakeDistributionChart = ({ id, title }) => {
         <BarChart
           width={620}
           height={350}
-          series={[{ data: evCounts, label: "EV Count", id: "evCountId" }]}
+          series={[
+            {
+              data: evCounts,
+              label: "EV Count",
+              id: "evCountId",
+              color: "#13aed6",
+            },
+          ]}
           xAxis={[
             {
               label: "Model",

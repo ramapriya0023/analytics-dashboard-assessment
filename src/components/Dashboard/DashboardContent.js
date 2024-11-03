@@ -1,17 +1,15 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import TopMileageGauges from "../AnalysisComponents/TopMileageGauges";
-import SimplePieChart from "../AnalysisComponents/SimplePieChart";
+import SimplePieChart from "../AnalysisComponents/EVTypePieChart";
 import EVMakeDistributionChart from "../AnalysisComponents/EVMakeDistributionChart";
 import SalesFrequencyLineChart from "../AnalysisComponents/SalesFrequencyLineChart";
 import CAFVEligibilityChart from "../AnalysisComponents/CAFVEligibilityChart";
 import HighlightsContainer from "../AnalysisComponents/HighlightsContainer";
-import EVInsightsScatterPlot from "../AnalysisComponents/EVInsightsScatterPlot";
+import EVInsightsScatterPlot from "../AnalysisComponents/InsightsScatterPlot";
 
 const DashboardContainer = styled("div")({
   display: "flex",
-  //justifyContent: "space-around",
-  //flexWrap: "wrap",
   gap: "30px",
   flexDirection: "column",
 });

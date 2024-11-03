@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ScatterChart } from "@mui/x-charts/ScatterChart"; // Import the ScatterChart
+import { ScatterChart } from "@mui/x-charts/ScatterChart";
 import { styled } from "@mui/material/styles";
 import {
   Card,
@@ -17,7 +17,6 @@ const Container = styled(Card)({
   borderRadius: "15px",
   maxWidth: "47%",
   width: "47%",
-  //width: "940px",
   height: "100%",
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
 });
@@ -29,7 +28,7 @@ const ChartContent = styled("div")({
   alignItems: "center",
 });
 
-const EVInsightsScatterPlot = ({ id, title }) => {
+const EVInsightsScatterPlot = ({ title }) => {
   const [chartData, setChartData] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef(null);

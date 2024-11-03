@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import { Gauge } from "@mui/x-charts/Gauge";
 import {
   GaugeContainer,
   GaugeValueArc,
@@ -23,7 +22,6 @@ const Container = styled(Card)({
   borderRadius: "15px",
   maxWidth: "63%",
   width: "63%",
-  //width: "940px",
   height: "100%",
   padding: "10px",
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.0), 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
@@ -117,16 +115,9 @@ const TopMileageGauges = ({ id, title }) => {
                 valueMax={500}
               >
                 <GaugeReferenceArc />
-                <GaugeValueArc />
+                <GaugeValueArc style={{ fill: "#000" }} />
                 <GaugePointer />
               </GaugeContainer>
-              {/* <Gauge
-                width={140}
-                height={160}
-                value={model.mileage}
-                valueMax={500}
-                text={`${model.mileage} \r miles`}
-              /> */}
               <Typography
                 variant="body1"
                 sx={{ position: "relative", bottom: "20px" }}
