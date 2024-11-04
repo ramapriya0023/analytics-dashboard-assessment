@@ -1,5 +1,9 @@
 # MapUp - Analytics Dashboard Assessment
 
+## Public URL
+
+https://lustrous-brioche-bd0d96.netlify.app/
+
 ## Screenshots
 
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/8eafbf69-eb4e-46e1-a369-1a7cc31cf7a0">
